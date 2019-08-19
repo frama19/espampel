@@ -2,9 +2,21 @@ function sendWebPage(conn,answertype)
 	buf="HTTP/1.1 200 OK\nServer: NodeMCU\nContent-Type: text/html\n\n"
 	buf = buf .. "<html><body>\n"
 	buf = buf .. "<h1>Welcome to the Camp-Ampel</h1>"
-	buf = buf .. "Rot: " .. gpio.read(red) .. "<br/>"
-	buf = buf .. "Gelb: " .. gpio.read(yellow) .. "<br/>"
-	buf = buf .. "Gruen: " .. gpio.read(green) .. "<br/>"
+	if gpio.read(red) == 1 then
+		buf = buf .. "<button onclick=\"location.ref='/red=off';\">Rot: " .. gpio.read(red) .. "</button><br/>"
+	else
+		buf = buf .. "<button onclick=\"location.ref='/red=on';\">Rot: " .. gpio.read(red) .. "</button><br/>"
+	end
+	if gpio.read(yellow) == 1 then
+		buf = buf .. "<button onclick=\"location.ref='/yellow=off';\">Gelb: " .. gpio.read(yellow) .. "</button><br/>"
+	else
+		buf = buf .. "<button onclick=\"location.ref='/yellow=on';\">Gelb: " .. gpio.read(yellow) .. "</button><br/>"
+	end
+	if gpio.read(green) == 1 then
+		buf = buf .. "<button onclick=\"location.ref='/green=off';\">Grün: " .. gpio.read(green) .. "</button><br/>"
+	else
+		buf = buf .. "<button onclick=\"location.ref='/green=on';\">Grün: " .. gpio.read(green) .. "</button><br/>"
+	end
 	buf = buf .. "\n</body></html>"
 	conn:send(buf)
 	buf=nil
