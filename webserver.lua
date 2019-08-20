@@ -1,6 +1,7 @@
 function sendWebPage(conn,answertype)
 	buf="HTTP/1.1 200 OK\nServer: NodeMCU\nContent-Type: text/html\n\n"
 	buf = buf .. "<html><head>"
+	buf = buf .. "<meta http-equiv=\"refresh\" content=\"3; URL=/\">"
     buf = buf .. "<style>"
     buf = buf .. ".flashButton{padding:0.3em 0em 0.3em 0em;margin-top:1em;width: 5em;cursor: pointer;line-height:1em;"
     buf = buf .. "text-align: center;font-weight: bold;font-size: 2em;-webkit-animation: BUTTON_BLINK 0.5s infinite;"
