@@ -27,3 +27,4 @@ print("Starting wifi configuration")
 dofile("wifi_config.lc")
 end
 end
+end

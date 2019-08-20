@@ -2,12 +2,15 @@ function sendWebPage(conn,answertype)
 	buf="HTTP/1.1 200 OK\nServer: NodeMCU\nContent-Type: text/html\n\n"
 	buf = buf .. "<html><head>"
     buf = buf .. "<style>"
-    buf = buf .. ".flashButton{padding:0.3em 0em 0.3em 0em;margin-top:1em;width: 5em;cursor: pointer;line-height: 1em;text-align: center;font-weight: bold;font-size: 2em;-webkit-animation: BUTTON_BLINK 0.5s infinite;  /* Safari 4+ */-moz-animation: BUTTON_BLINK 0.5s infinite;  /* Fx 5+ */-o-animation: BUTTON_BLINK 0.5s infinite;  /* Opera 12+ */animation: BUTTON_BLINK 0.5s infinite;  /* IE 10+, Fx 29+ */}"
+    buf = buf .. ".flashButton{padding:0.3em 0em 0.3em 0em;margin-top:1em;width: 5em;cursor: pointer;line-height:1em;"
+    buf = buf .. "text-align: center;font-weight: bold;font-size: 2em;-webkit-animation: BUTTON_BLINK 0.5s infinite;"
+    buf = buf .. "-moz-animation: BUTTON_BLINK 0.5s infinite;  -o-animation: BUTTON_BLINK 0.5s infinite;"
+	buf = buf .. "animation: BUTTON_BLINK 0.5s infinite; }"
     buf = buf .. "@-webkit-keyframes BUTTON_BLINK{0%, 49% {background-color: #222;color:#ddd;border-radius:5px;}"
     buf = buf .. "50%, 100% {background-color: #fff;color:#222;border-radius:5px;}}"
     buf = buf .. "</style>"
     buf = buf .. "</head><body>\n"
-	buf = buf .. "<h1>Welcome to the Camp-Ampel</h1>"
+	buf = buf .. "<h1>Welcome to the FraMA Camp-Ampel</h1>"
 	buf = buf .. "<div style=\"background-color:#000; display:inline-block;\">"
 	if gpio.read(red) == 1 then
         buf = buf .. "<div onclick=\"javascript:location.href='/red=off'\" style=\"width: 3em; height:3em; background-color:#f00;border-radius:1.5em;margin:0.4em;\"></div>"
@@ -75,7 +78,7 @@ function startWebServer()
 				sendWebPage(conn,1)
 				conn:on("sent", function(conn) conn:close() end)
 			elseif (payload:find("GET /flash") ~= nil) then
-				flash()
+				doFlash()
 				sendWebPage(conn,1)
 				conn:on("sent", function(conn) conn:close() end)
 			elseif (payload:find("GET /") ~= nil) then
@@ -97,7 +100,7 @@ function startWebServer()
 					node.output(nil)
 					global_c=nil
 				end)
-				print("Welcome to WS2812Ambi CLI")
+				print("Welcome to FraMA Camp-Ampel CLI")
 
 			end
 		end)

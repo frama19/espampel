@@ -13,7 +13,7 @@ function debounce (func)
     end
 end
 
-function flash()
+function doFlash()
 	gpio.write(flash,gpio.HIGH)
 	flashTimer:start()
 end
