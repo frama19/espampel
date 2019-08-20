@@ -41,7 +41,7 @@ function logic()
 	gpio.write(green,0)
 
 	flashTimer = tmr.create()
-	flashTimer:register(500, tmr.ALARM_SEMI, function() gpio.mode(flash,gpio.INPUT,gpio.FLOAT) end)
+	flashTimer:register(150, tmr.ALARM_SEMI, function() gpio.mode(flash,gpio.INPUT,gpio.FLOAT) end)
 
 	-- run programm
 	dofile("steps.lc")
