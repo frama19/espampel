@@ -15,8 +15,15 @@ else if (files["wifi_config.lua"]) then
   node.compile("wifi_config.lua")
   file.remove("wifi_config.lua")
   node.restart()
+else if (files["steps.lua"]) then
+  print("Compiling steps.lua to steps.lc")
+  file.remove("steps.lc")
+  node.compile("steps.lua")
+  file.remove("steps.lua")
+  node.restart()
 else
 --start logic out of wifi_config.lua
+print("Starting wifi configuration")
 dofile("wifi_config.lc")
 end
 end
