@@ -2,21 +2,29 @@ function sendWebPage(conn,answertype)
 	buf="HTTP/1.1 200 OK\nServer: NodeMCU\nContent-Type: text/html\n\n"
 	buf = buf .. "<html><body>\n"
 	buf = buf .. "<h1>Welcome to the Camp-Ampel</h1>"
+    buf = buf .. "<div style=\"background-color:#000; display:inline-block;\">"
 	if gpio.read(red) == 1 then
-		buf = buf .. "<button onclick=\"location.ref='/red=off';\">Rot: " .. gpio.read(red) .. "</button><br/>"
+		--buf = buf .. "<button onclick=\"location.ref='/red=off';\">Rot: " .. gpio.read(red) .. "</button><br/>"
+        buf = buf .. "<div onclick=\"javascript:location.href='?red=off'\" style=\"width: 3em; height:3em; background-color:#f00;border-radius:1.5em;margin:0.4em;\"></div>"
 	else
-		buf = buf .. "<button onclick=\"location.ref='/red=on';\">Rot: " .. gpio.read(red) .. "</button><br/>"
+		--buf = buf .. "<button onclick=\"location.ref='/red=on';\">Rot: " .. gpio.read(red) .. "</button><br/>"
+        buf = buf .. "<div onclick=\"javascript:location.href='?red=on'\" style=\"width: 3em; height:3em; background-color:#300;border-radius:1.5em;margin:0.4em;\"></div>"
 	end
 	if gpio.read(yellow) == 1 then
-		buf = buf .. "<button onclick=\"location.ref='/yellow=off';\">Gelb: " .. gpio.read(yellow) .. "</button><br/>"
+		--buf = buf .. "<button onclick=\"location.ref='/yellow=off';\">Gelb: " .. gpio.read(yellow) .. "</button><br/>"
+        buf = buf .. "<div onclick=\"javascript:location.href='?yellow=off'\" style=\"width: 3em; height:3em; background-color:#fd0;border-radius:1.5em;margin:0.4em;\"></div>"
 	else
-		buf = buf .. "<button onclick=\"location.ref='/yellow=on';\">Gelb: " .. gpio.read(yellow) .. "</button><br/>"
+		--buf = buf .. "<button onclick=\"location.ref='/yellow=on';\">Gelb: " .. gpio.read(yellow) .. "</button><br/>"
+        buf = buf .. "<div onclick=\"javascript:location.href='?yellow=on'\" style=\"width: 3em; height:3em; background-color:#220;border-radius:1.5em;margin:0.4em;\"></div>"
 	end
 	if gpio.read(green) == 1 then
-		buf = buf .. "<button onclick=\"location.ref='/green=off';\">Grün: " .. gpio.read(green) .. "</button><br/>"
+		--buf = buf .. "<button onclick=\"location.ref='/green=off';\">Grün: " .. gpio.read(green) .. "</button><br/>"
+        buf = buf .. "<div onclick=\"javascript:location.href='?green=off'\" style=\"width: 3em; height:3em; background-color:#00f;border-radius:1.5em;margin:0.4em;\"></div>"
 	else
-		buf = buf .. "<button onclick=\"location.ref='/green=on';\">Grün: " .. gpio.read(green) .. "</button><br/>"
+		--buf = buf .. "<button onclick=\"location.ref='/green=on';\">Grün: " .. gpio.read(green) .. "</button><br/>"
+        buf = buf .. "<div onclick=\"javascript:location.href='?green=on'\" style=\"width: 3em; height:3em; background-color:#002;border-radius:1.5em;margin:0.4em;\"></div>"
 	end
+    buf = buf .. "</div>"
 	buf = buf .. "\n</body></html>"
 	conn:send(buf)
 	buf=nil
