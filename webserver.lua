@@ -30,6 +30,14 @@ function sendWebPage(conn,answertype)
 	end
     buf = buf .. "</div>"
     buf = buf .. "<div class=\"flashButton\" onclick=\"javascript:location.href='/flash'\">flash !</div>"
+
+	local running, mode = autoTimer:state()
+	if running == true then
+	    buf = buf .. "<div onclick=\"javascript:location.href='/auto=off'\">automatic operation</div>"
+	else
+	    buf = buf .. "<div onclick=\"javascript:location.href='/auto=on'\">manual operation</div>"
+	end
+
 	buf = buf .. "\n</body></html>"
 	conn:send(buf)
 	buf=nil
@@ -76,6 +84,21 @@ function startWebServer()
 				conn:on("sent", function(conn) conn:close() end)
 			elseif (payload:find("GET /green=on") ~= nil) then
 				gpio.write(green,gpio.HIGH)
+				sendWebPage(conn,1)
+				conn:on("sent", function(conn) conn:close() end)
+			elseif (payload:find("GET /auto=on") ~= nil) then
+				local running, mode = autoTimer:state()
+				if running == false then
+					autoTimer:start()
+				end
+				sendWebPage(conn,1)
+				conn:on("sent", function(conn) conn:close() end)
+			elseif (payload:find("GET /auto=off") ~= nil) then
+				local running, mode = autoTimer:state()
+				if running == true then
+					autoTimer:stop()
+				end
+				autoTimer:stop()
 				sendWebPage(conn,1)
 				conn:on("sent", function(conn) conn:close() end)
 			elseif (payload:find("GET /flash") ~= nil) then
