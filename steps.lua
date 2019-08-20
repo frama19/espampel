@@ -72,7 +72,7 @@ function handleAuto()
 			curStepIndex = 0
 		end
 		curDelay = 0
-		print("[AUTO] transition to step " .. curStepIndex)
+		--print("[AUTO] transition to step " .. curStepIndex)
 	end
 end
 

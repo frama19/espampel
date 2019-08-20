@@ -18,7 +18,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-FILES="wlancfg.lua init.lua wifi_config.lua webserver.lua"
+FILES="wlancfg.lua init.lua wifi_config.lua webserver.lua steps.lua"
 for f in $FILES; do
     echo "------------- $f ------------"
     $LUATOOL -p $DEVICE -b 115200 -f $f -t $f

@@ -1,14 +1,11 @@
 function sendWebPage(conn,answertype)
+	local running, mode = autoTimer:state()
 	buf="HTTP/1.1 200 OK\nServer: NodeMCU\nContent-Type: text/html\n\n"
 	buf = buf .. "<html><head>"
 	buf = buf .. "<meta http-equiv=\"refresh\" content=\"3; URL=/\">"
     buf = buf .. "<style>"
     buf = buf .. ".flashButton{padding:0.3em 0em 0.3em 0em;margin-top:1em;width: 5em;cursor: pointer;line-height:1em;"
-    buf = buf .. "text-align: center;font-weight: bold;font-size: 2em;-webkit-animation: BUTTON_BLINK 0.5s infinite;"
-    buf = buf .. "-moz-animation: BUTTON_BLINK 0.5s infinite;  -o-animation: BUTTON_BLINK 0.5s infinite;"
-	buf = buf .. "animation: BUTTON_BLINK 0.5s infinite; }"
-    buf = buf .. "@-webkit-keyframes BUTTON_BLINK{0%, 49% {background-color: #222;color:#ddd;border-radius:5px;}"
-    buf = buf .. "50%, 100% {background-color: #fff;color:#222;border-radius:5px;}}"
+    buf = buf .. "text-align: center;font-weight: bold;font-size: 2em; border: solid 2px black;}"
     buf = buf .. "</style>"
     buf = buf .. "</head><body>\n"
 	buf = buf .. "<h1>Welcome to the FraMA Camp-Ampel</h1>"
@@ -30,12 +27,10 @@ function sendWebPage(conn,answertype)
 	end
     buf = buf .. "</div>"
     buf = buf .. "<div class=\"flashButton\" onclick=\"javascript:location.href='/flash'\">flash !</div>"
-
-	local running, mode = autoTimer:state()
 	if running == true then
-	    buf = buf .. "<div onclick=\"javascript:location.href='/auto=off'\">automatic operation</div>"
+	    buf = buf .. "<div class=\"flashButton\" onclick=\"javascript:location.href='/auto=off'\">automatic operation</div>"
 	else
-	    buf = buf .. "<div onclick=\"javascript:location.href='/auto=on'\">manual operation</div>"
+	    buf = buf .. "<div class=\"flashButton\" onclick=\"javascript:location.href='/auto=on'\">manual operation</div>"
 	end
 
 	buf = buf .. "\n</body></html>"
