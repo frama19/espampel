@@ -9,11 +9,11 @@ end
 
 -- Steps displayed in automatic mode
 steps = {}
-steps[0] = buildStep(1, 0, 0, 15)
-steps[1] = buildStep(1, 1, 0, 1)
+steps[0] = buildStep(1, 0, 0, 25)
+steps[1] = buildStep(1, 1, 0, 2)
 steps[2] = buildStep(0, 0, 1, 15)
-steps[3] = buildStep(0, 1, 0, 3)
-
+steps[3] = buildStep(0, 1, 0, 2)
+--[[
 steps[4] = buildStep(1, 0, 0, 15)
 steps[5] = buildStep(1, 1, 0, 1)
 steps[6] = buildStep(0, 0, 1, 15)
@@ -51,11 +51,17 @@ steps[34] = buildStep(1, 1, 0, 10)
 steps[35] = buildStep(1, 1, 1, 10)
 steps[36] = buildStep(0, 1, 1, 10)
 steps[37] = buildStep(0, 0, 1, 10)
-
+--]]
 -- Index of current shown step on traffic light
 curStepIndex = 0
 -- Number of seconds in current step
 curDelay = 0
+blitzerScharf=1
+
+
+blitzerResetTimer = tmr.create()
+blitzerResetTimer:register(10000, tmr.ALARM_SEMI, function() blitzerScharf=1 end)
+
 
 function handleAuto()
 	local curStep = steps[curStepIndex]
@@ -64,6 +70,8 @@ function handleAuto()
 	gpio.write(green, curStep.green)
 
 	-- print("[AUTO] curDelay=" .. curDelay .. " curStepIndex=" .. curStepIndex)
+
+	
 
 	curDelay = curDelay + 1
 	if curDelay >= curStep.delay then	
@@ -74,8 +82,23 @@ function handleAuto()
 		curDelay = 0
 		--print("[AUTO] transition to step " .. curStepIndex)
 	end
+
 end
+
+function TrafficControl() 
+	if gpio.read(red) > 0 and gpio.read(yellow) == 0 and gpio.read(green) == 0 and gpio.read(motion)==0 and blitzerScharf==1 then
+		doFlash()
+		blitzerScharf=0
+		blitzerResetTimer:start()
+	end
+end
+	
+
 
 autoTimer = tmr.create()
 autoTimer:register(1000, tmr.ALARM_AUTO, handleAuto)
 autoTimer:start()
+
+trafficControlTimer = tmr.create()
+trafficControlTimer:register(200,tmr.ALARM_AUTO,TrafficControl)
+trafficControlTimer:start()

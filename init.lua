@@ -1,6 +1,3 @@
-
-
-
 files= file.list()
 
 if (files["webserver.lua"]) then
@@ -23,8 +20,8 @@ else if (files["steps.lua"]) then
   node.restart()
 else
 --start logic out of wifi_config.lua
-print("Starting wifi configuration")
-dofile("wifi_config.lc")
+	print("Starting wifi configuration")
+	dofile("wifi_config.lc")
 end
 end
 end
